@@ -1,0 +1,28 @@
+// Color variables
+$colors: (
+      "text-primary" : #45474a,
+      "text-secondary" : hsl(192, 5%, 61%),
+      "button-primary" : #3394ca,  
+      "button-primary-text" : #ffffff,  
+      "button-seconday" : #3e445e,
+
+);
+@function color($color-styles) {
+  @return map-get($colors,$color-styles);
+};
+
+$font-sizes: (
+  "font-size-small": calc(1rem + 0.2vw),
+  "font-size-regular": calc(12px + 0.3vw),
+  "font-size-medium": calc(1.2rem + 1vw),
+  "font-size-large": calc(1.5rem + 2vw),
+);
+
+@function font-size($font-size-style) {
+  @return map-get($font-sizes, $font-size-style);
+}
+
+p {
+  font-size: calc(12px + 0.3vw);
+  color: var(--clr-text-primary);
+}
