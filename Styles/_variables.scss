@@ -1,10 +1,8 @@
 // Color variables
 $colors: (
-  'text-primary': #45474a,
-  'text-secondary': hsl(192, 5%, 61%),
-  'button-primary': #3394ca,
-  'button-primary-text': #ffffff,
-  'button-seconday': #3e445e
+  'bg-white': #ffffff,
+  'bg-background': #26263a,
+  'btn-primary': #0076bd
 );
 @function color($color-styles) {
   @return map-get($colors, $color-styles);
@@ -22,6 +20,6 @@ $font-sizes: (
 }
 
 p {
-  font-size: calc(12px + 0.3vw);
+  font-size: font-size(font-size-regular);
   color: var(--clr-text-primary);
 }

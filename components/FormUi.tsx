@@ -34,27 +34,10 @@ function FormUi() {
   return (
     <div className="form">
       <div className="form-container">
-        <h2>Address Validation Form</h2>
+        <h2>Lawpath Tech Test <span> By Madan</span></h2>
+        <h3>Address Validation Form</h3>
         <form onSubmit={handleSubmit}>
-          <label>Postcode:</label>
-          <input
-            type="text"
-            name="postcode"
-            value={formData.postcode}
-            onChange={handleChange}
-            required
-          />
-
-          <label>Suburb:</label>
-          <input
-            type="text"
-            name="suburb"
-            value={formData.suburb}
-            onChange={handleChange}
-            required
-          />
-
-          <label>State:</label>
+          <label>State</label>
           <select name="state" value={formData.state} onChange={handleChange} required>
             <option value="">Select State</option>
             <option value="VIC">VIC</option>
@@ -62,6 +45,25 @@ function FormUi() {
             <option value="NSW">NSW</option>
             <option value="WA">WA</option>
           </select>
+          <label>Postcode</label>
+          <input
+            type="text"
+            name="postcode"
+            placeholder="Postcode"
+            value={formData.postcode}
+            onChange={handleChange}
+            required
+          />
+
+          <label>Suburb</label>
+          <input
+            type="text"
+            name="suburb"
+            placeholder="Suburb"
+            value={formData.suburb}
+            onChange={handleChange}
+            required
+          />
 
           <button type="submit">Validate Address</button>
         </form>
