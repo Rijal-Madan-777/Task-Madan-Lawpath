@@ -1,57 +1,63 @@
 .container {
-    height: 100vh;
-    width: 100vw;
-
+  height: 100vh;
+  width: 100vw;
 }
 .form {
-    width: 100%;
-    height: 100%;
-    @include flexBox(center,center);
-
-
+  width: 100%;
+  height: 100%;
+  @include flexBox(center, center);
 }
 .form-container {
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #ffffff;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
 
-  @include responsive($esm) { width: 90%; }
-  @include responsive($md) { width: 80%; }
-  @include responsive($lg) { width: 70%; }
-  @include responsive($xl) { width: 60%; }
-  @include responsive($xxl) { width: 50%; }
+  @include responsive($esm) {
+    width: 90%;
   }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
+  @include responsive($md) {
+    width: 80%;
   }
-  
-  input,
-  select,
-  button {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  @include responsive($lg) {
+    width: 70%;
   }
-  
-  button {
-    background: #0070f3;
-    color: white;
-    cursor: pointer;
+  @include responsive($xl) {
+    width: 60%;
   }
-  
-  button:disabled {
-    background: gray;
+  @include responsive($xxl) {
+    width: 50%;
   }
-  
-  .message {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background: #0070f3;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: gray;
+}
+
+.message {
+  margin-top: 10px;
+  font-weight: bold;
+}
