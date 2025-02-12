@@ -2,7 +2,8 @@
 $colors: (
   'bg-white': #ffffff,
   'bg-background': #26263a,
-  'btn-primary': #0076bd
+  'btn-primary': #0076bd,
+  'text-secondary': #26263a,
 );
 @function color($color-styles) {
   @return map-get($colors, $color-styles);

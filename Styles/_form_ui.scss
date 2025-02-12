@@ -47,6 +47,7 @@
     h3 {
       color: color(bg-white);
       margin-top: 20px;
+      margin-bottom: 20px;
     }
     h2 {
       text-align: center;
@@ -58,7 +59,6 @@
     label {
       display: block;
       font-weight: bold;
-      margin-top: 15px;
       color: rgb(246, 240, 240);
     }
     p {
@@ -78,6 +78,7 @@
     input,
     select {
       color: color(bg-white);
+      margin-top: 10px;
       font-size: font-size(font-size-regular);
     }
     input::placeholder {
@@ -105,10 +106,35 @@
     @include responsive($esm) {
       padding: 15px;
     }
+    &-input {
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 15px;
+      background-color: rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        background: linear-gradient(rgba(255, 255, 255, 0.815),rgba(243, 218, 218, 0.41));
+        box-shadow: -15px 30px 50px rgba(0, 0, 0, 0.5);
+        transform: scale(1.15) translateX(30px) translateY(-15px);
+        z-index: 20;
+        transition: all 0.3s ease-in-out;
+        label {
+          color: color(text-secondary);
+        }
+        input,
+        select {
+          color: color(text-secondary);
+          margin-top: 10px;
+          font-size: font-size(font-size-regular);
+        }
+        input::placeholder {
+          color: color(text-secondary);
+          font-size: font-size(font-size-regular);
+        }
+        p {
+          color: rgb(137, 15, 15);
+        }
+      }
+    }
   }
-}
-
-.message {
-  margin-top: 10px;
-  font-weight: bold;
 }

@@ -31,36 +31,42 @@ function FormUi() {
         </h2>
         <h3>Address Validation Form</h3>
         <form onSubmit={handleSubmit}>
-          <label>*State</label>
-          <select name="state" value={values.state} onChange={handleChange}>
-            <option value="">Select State</option>
-            <option value="NSW">NSW</option>
-            <option value="VIC">VIC</option>
-            <option value="QLD">QLD</option>
-            <option value="WA">WA</option>
-            <option value="SA">SA</option>
-            <option value="TAS">TAS</option>
-          </select>
-          {errors.state && <p>*{errors.state}</p>}
-          <p></p>
-          <label>*Suburb</label>
-          <input
-            type="text"
-            name="suburb"
-            placeholder="Suburb"
-            value={values.suburb}
-            onChange={handleChange}
-          />
-          {errors.suburb && <p>*{errors.suburb}</p>}
-          <label>*Postcode</label>
-          <input
-            type="number"
-            name="postcode"
-            placeholder="Postcode"
-            value={values?.postcode}
-            onChange={handleChange}
-          />
-          {errors.postcode && <p>*{errors.postcode}</p>}
+          <div className="form-container-input">
+            <label>*State</label>
+            <select name="state" value={values.state} onChange={handleChange}>
+              <option value="">Select State</option>
+              <option value="NSW">NSW</option>
+              <option value="VIC">VIC</option>
+              <option value="QLD">QLD</option>
+              <option value="WA">WA</option>
+              <option value="SA">SA</option>
+              <option value="TAS">TAS</option>
+            </select>
+            {errors.state && <p>*{errors.state}</p>}
+          </div>
+          <div className="form-container-input">
+            <label>*Suburb</label>
+            <input
+              type="text"
+              name="suburb"
+              placeholder="Suburb"
+              value={values.suburb}
+              onChange={handleChange}
+            />
+            {errors.suburb && <p>*{errors.suburb}</p>}
+          </div>
+
+          <div className="form-container-input">
+            <label>*Postcode</label>
+            <input
+              type="number"
+              name="postcode"
+              placeholder="Postcode"
+              value={values?.postcode}
+              onChange={handleChange}
+            />
+            {errors.postcode && <p>*{errors.postcode}</p>}
+          </div>
 
           <button type="submit">Validate Address</button>
         </form>
