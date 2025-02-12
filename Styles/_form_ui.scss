@@ -1,57 +1,112 @@
 .container {
-    height: 100vh;
-    width: 100vw;
-
+  min-height: 100vh;
+  overflow-x: hidden;
+  @include flexBox(center, center);
+  width: 100vw;
+  position: relative;
+  background-color: color(bg-background);
+}
+.container::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(#ffc107, #e91e63);
+  border-radius: 50%;
+  transform: translate(calc(-250px - 5vw), -120px);
+}
+.container::after {
+  content: '';
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(#2196f3, #31ff38);
+  border-radius: 50%;
+  transform: translate(calc(250px + 5vw), 150px);
 }
 .form {
-    width: 100%;
+  position: relative;
+  z-index: 10;
+
+  @include responsive($esm) {
+    width: calc(300px + 15vw);
+  }
+
+
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  @include flexBox(center, center);
+  border-radius: 12px;
+  backdrop-filter: blur(25px);
+  &-container {
     height: 100%;
-    @include flexBox(center,center);
-
-
-}
-.form-container {
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #ffffff;
-
-  @include responsive($esm) { width: 90%; }
-  @include responsive($md) { width: 80%; }
-  @include responsive($lg) { width: 70%; }
-  @include responsive($xl) { width: 60%; }
-  @include responsive($xxl) { width: 50%; }
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  input,
-  select,
-  button {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    h3 {
+      color: color(bg-white);
+      margin-top: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: color(bg-white);
+      span {
+        color: #0076bd;
+      }
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+      color: rgb(246, 240, 240);
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: calc(10px + 0.2vw);
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      background: transparent;
+      border-radius: 5px;
+    }
+    input,
+    select {
+      color: color(bg-white);
+      font-size: font-size(font-size-regular);
+    }
+    input::placeholder {
+      color: color(bg-white);
+      font-size: font-size(font-size-regular);
+    }
+
+    button {
+      margin-top: 20px;
+
+      background: color(btn-primary);
+      &:hover {
+        background: transparent;
+        backdrop-filter: blur(100px);
+        transition: all 0.2s ease-in-out;
+      }
+      color: color(bg-white);
+      cursor: pointer;
+      font-size: font-size(font-size-regular);
+    }
+
+    button:disabled {
+      background: gray;
+    }
+    @include responsive($esm) {
+      padding: 15px;
+    }
   }
-  
-  button {
-    background: #0070f3;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background: gray;
-  }
-  
-  .message {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-  
+}
+
+.message {
+  margin-top: 10px;
+  font-weight: bold;
+}

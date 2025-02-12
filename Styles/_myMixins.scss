@@ -1,22 +1,22 @@
 // flexbox mixins
-@mixin flexBox($justify_content: flex-start,$align_items: normal,$flex_derection: row) {
-    display: flex;
-    justify-content: $justify_content;
-    align-items: $align_items;
-    flex-direction: $flex_derection 
-};
+@mixin flexBox($justify_content: flex-start, $align_items: normal, $flex_derection: row) {
+  display: flex;
+  justify-content: $justify_content;
+  align-items: $align_items;
+  flex-direction: $flex_derection;
+}
 
 // Responsive mixins
 
-$esm: 20rem;  // 320px
-$sm: 40rem;  // 640px
-$md: 48rem;  // 768px
-$lg: 64rem;  // 1024px
-$xl: 80rem;  // 1280px
-$xxl: 96rem; // 1536px
+$esm: 12rem; // 320px
+$sm: 40rem; // 640px
+$md: 48rem; // 768px
+$lg: 64rem; // 1024px
+$xl: 80rem; // 1280px
+$xxl: 116rem; // 1536px
 
 @mixin responsive($breakpoint) {
-    @media (width >= $breakpoint) {
-      @content;
-    }
+  @media (width >= $breakpoint) {
+    @content;
   }
+}
