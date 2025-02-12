@@ -1,10 +1,16 @@
 'use client'
+import useCustomForm from '@/Hooks/useCustomForm'
 import React, { useState } from 'react'
 
 function FormUi() {
-  const [formData, setFormData] = useState({ postcode: '', suburb: '', state: '' })
+  const { values, errors, isSubmitting, handleChange, handleSubmit } = useCustomForm({
+    state: '',
+    suburb: '',
+    postcode: ''
+  })
+  console.log('🚀 ~ FormUi ~ values:', values)
+
   const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
 
   // Valid postcode-suburb-state data
   const validAddresses = [
@@ -17,58 +23,47 @@ function FormUi() {
     { state: 'WA', suburb: 'Perth', postcode: '6000' }
   ]
 
-  const handleChange = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-    setError('')
-    setMessage('')
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const { postcode, suburb, state } = formData
-    // Log the values in console
-    console.log('Postcode:', postcode)
-    console.log('Suburb:', suburb)
-    console.log('State:', state)
-  }
   return (
     <div className="form">
       <div className="form-container">
-        <h2>Lawpath Tech Test <span> By Madan</span></h2>
+        <h2>
+          Lawpath Tech Test <span> By Madan</span>
+        </h2>
         <h3>Address Validation Form</h3>
         <form onSubmit={handleSubmit}>
-          <label>State</label>
-          <select name="state" value={formData.state} onChange={handleChange} required>
+          <label>*State</label>
+          <select name="state" value={values.state} onChange={handleChange}>
             <option value="">Select State</option>
+            <option value="NSW">NSW</option>
             <option value="VIC">VIC</option>
             <option value="QLD">QLD</option>
-            <option value="NSW">NSW</option>
             <option value="WA">WA</option>
+            <option value="SA">SA</option>
+            <option value="TAS">TAS</option>
           </select>
-          <label>Postcode</label>
-          <input
-            type="text"
-            name="postcode"
-            placeholder="Postcode"
-            value={formData.postcode}
-            onChange={handleChange}
-            required
-          />
-
-          <label>Suburb</label>
+          {errors.state && <p>*{errors.state}</p>}
+          <p></p>
+          <label>*Suburb</label>
           <input
             type="text"
             name="suburb"
             placeholder="Suburb"
-            value={formData.suburb}
+            value={values.suburb}
             onChange={handleChange}
-            required
           />
+          {errors.suburb && <p>*{errors.suburb}</p>}
+          <label>*Postcode</label>
+          <input
+            type="number"
+            name="postcode"
+            placeholder="Postcode"
+            value={values?.postcode}
+            onChange={handleChange}
+          />
+          {errors.postcode && <p>*{errors.postcode}</p>}
 
           <button type="submit">Validate Address</button>
         </form>
-
-        {error && <p className="error-message">{error}</p>}
         {message && <p className="success-message">{message}</p>}
       </div>
     </div>

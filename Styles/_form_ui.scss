@@ -32,7 +32,6 @@
     width: calc(300px + 15vw);
   }
 
-
   min-width: 300px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
@@ -62,7 +61,10 @@
       margin-top: 15px;
       color: rgb(246, 240, 240);
     }
-
+    p {
+      margin-top: 8px;
+      color: rgb(11, 3, 5);
+    }
     input,
     select,
     button {
