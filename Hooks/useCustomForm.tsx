@@ -1,11 +1,14 @@
-import { stateSuburbList } from '@/Constant/StateSuburbList'
+import { SEARCH_POSTCODE, stateSuburbList } from '@/Constant/constants'
 import { FormValues } from '@/Constant/Types'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import { useState } from 'react'
 
 const useCustomForm = (initialValues: FormValues) => {
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<Partial<FormValues>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [fetchData, { data, loading, error }] = useMutation(SEARCH_POSTCODE)
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target
@@ -56,6 +59,14 @@ const useCustomForm = (initialValues: FormValues) => {
     e.preventDefault()
     if (!validate()) return
     setIsSubmitting(true)
+    fetchData({ variables: { q: values.suburb, state: values.state } })
+      .then((result) => {
+        setIsSubmitting(false)
+      })
+      .catch((err) => {
+        setIsSubmitting(false)
+        console.error('Error fetching data:', err)
+      })
 
     setTimeout(() => {
       setIsSubmitting(false)
@@ -63,7 +74,7 @@ const useCustomForm = (initialValues: FormValues) => {
     }, 2000)
   }
 
-  return { values, errors, isSubmitting, handleChange, handleSubmit }
+  return { values, errors, isSubmitting, handleChange, data, handleSubmit }
 }
 
 export default useCustomForm

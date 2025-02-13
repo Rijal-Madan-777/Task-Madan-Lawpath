@@ -1,10 +1,8 @@
 'use client'
 import React from 'react'
 import { ApolloProvider } from '@apollo/client'
-import createApolloClient from '@/apollo-client'
 import FormUi from '@/components/FormUi'
-
-const client = createApolloClient()
+import client from '@/apollo-client'
 
 function GraphqlWrapper() {
   return (

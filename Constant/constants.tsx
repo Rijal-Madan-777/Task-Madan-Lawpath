@@ -1,3 +1,19 @@
+import { gql } from '@apollo/client'
+
+export const SEARCH_POSTCODE = gql`
+  mutation SearchPostcode($q: String!, $state: String!) {
+    searchPostcode(q: $q, state: $state) {
+      localities {
+        id
+        location
+        postcode
+        state
+        latitude
+        longitude
+      }
+    }
+  }
+`
 export const stateSuburbList: Record<string, Record<string, number>> = {
   VIC: {
     Melbourne: 3000,

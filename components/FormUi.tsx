@@ -3,11 +3,12 @@ import useCustomForm from '@/Hooks/useCustomForm'
 import { Icon } from '@iconify/react/dist/iconify.js'
 
 function FormUi() {
-  const { values, errors, isSubmitting, handleChange, handleSubmit } = useCustomForm({
+  const { values, errors, isSubmitting, handleChange, data, handleSubmit } = useCustomForm({
     state: '',
     suburb: '',
     postcode: ''
   })
+  console.log('🚀 ~ FormUi ~ data:', data)
 
   return (
     <div className="form">
