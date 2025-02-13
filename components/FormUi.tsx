@@ -1,6 +1,6 @@
 'use client'
 import useCustomForm from '@/Hooks/useCustomForm'
-import React, { useState } from 'react'
+import { Icon } from '@iconify/react/dist/iconify.js'
 
 function FormUi() {
   const { values, errors, isSubmitting, handleChange, handleSubmit } = useCustomForm({
@@ -8,20 +8,6 @@ function FormUi() {
     suburb: '',
     postcode: ''
   })
-  console.log('🚀 ~ FormUi ~ values:', values)
-
-  const [message, setMessage] = useState('')
-
-  // Valid postcode-suburb-state data
-  const validAddresses = [
-    { state: 'VIC', suburb: 'Melbourne', postcode: '3000' },
-    { state: 'VIC', suburb: 'Ferntree Gully', postcode: '3156' },
-    { state: 'QLD', suburb: 'Brisbane', postcode: '4000' },
-    { state: 'QLD', suburb: 'Noosa Heads', postcode: '4567' },
-    { state: 'NSW', suburb: 'Broadway', postcode: '2007' },
-    { state: 'NSW', suburb: 'Surry Hills', postcode: '2010' },
-    { state: 'WA', suburb: 'Perth', postcode: '6000' }
-  ]
 
   return (
     <div className="form">
@@ -29,7 +15,10 @@ function FormUi() {
         <h2>
           Lawpath Tech Test <span> By Madan</span>
         </h2>
-        <h3>Address Validation Form</h3>
+        <h3>
+          <Icon icon="bitcoin-icons:address-book-outline" width="24" height="24" /> Address
+          Validation Form
+        </h3>
         <form onSubmit={handleSubmit}>
           <div className="form-container-input">
             <label>*State</label>
@@ -68,9 +57,10 @@ function FormUi() {
             {errors.postcode && <p>*{errors.postcode}</p>}
           </div>
 
-          <button type="submit">Validate Address</button>
+          <button disabled={isSubmitting} type="submit">
+            {isSubmitting ? 'Validating...' : 'Validate Address'}
+          </button>
         </form>
-        {message && <p className="success-message">{message}</p>}
       </div>
     </div>
   )

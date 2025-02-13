@@ -1,36 +1,6 @@
+import { stateSuburbList } from '@/Constant/StateSuburbList'
+import { FormValues } from '@/Constant/Types'
 import { useState } from 'react'
-
-type FormValues = {
-  state: string
-  suburb: string
-  postcode: number | string
-}
-const stateSuburbList: Record<string, Record<string, number>> = {
-  VIC: {
-    Melbourne: 3000,
-    FerntreeGully: 3156
-  },
-  QLD: {
-    Brisbane: 4000,
-    NoosaHeads: 4567
-  },
-  NSW: {
-    Broadway: 2007,
-    SurryHills: 2010
-  },
-  WA: {
-    Perth: 6000,
-    Fremantle: 6163
-  },
-  SA: {
-    Adelaide: 5000,
-    Whyalla: 5600
-  },
-  TAS: {
-    Hobart: 7000,
-    Launceston: 7250
-  }
-}
 
 const useCustomForm = (initialValues: FormValues) => {
   const [values, setValues] = useState<FormValues>(initialValues)
@@ -41,7 +11,6 @@ const useCustomForm = (initialValues: FormValues) => {
     const { name, value } = e.target
     setValues((prev) => ({ ...prev, [name]: value }))
 
-    // Clear error when user types
     setErrors((prev) => ({ ...prev, [name]: '' }))
     let newErrors: Partial<FormValues> = {}
 
@@ -69,7 +38,6 @@ const useCustomForm = (initialValues: FormValues) => {
     setErrors(newErrors)
   }
 
-  // Validate form fields
   const validate = () => {
     let newErrors: Partial<FormValues> = {}
     if (!values.state.trim()) newErrors.state = 'State is required'
@@ -84,18 +52,14 @@ const useCustomForm = (initialValues: FormValues) => {
     return Object.keys(newErrors).length === 0
   }
 
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!validate()) return
-
     setIsSubmitting(true)
 
-    // Simulate an API call
     setTimeout(() => {
-      console.log('Form submitted:', values)
       setIsSubmitting(false)
-      setValues(initialValues) // Reset form after submission
+      setValues(initialValues)
     }, 2000)
   }
 
