@@ -1,5 +1,5 @@
-import { SEARCH_POSTCODE, stateSuburbList } from '@/Constant/constants'
-import { FormValues } from '@/Constant/Types'
+import { SEARCH_POSTCODE, stateSuburbList } from '../Constant/constants'
+import { FormValues } from '../Constant/Types'
 import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 
