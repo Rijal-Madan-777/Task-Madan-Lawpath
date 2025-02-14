@@ -4,7 +4,6 @@ import axios from 'axios';
 import { gql } from 'graphql-tag';
 
 // Define GraphQL Schema
-
 const typeDefs = gql`
  type Query {
     _empty: String 
@@ -27,16 +26,14 @@ const typeDefs = gql`
     state: String
   }
 `;
-
-
 interface PostcodeResult {
   localities: string[];
 }
-
 interface SearchPostcodeArgs {
   q: string;
   state: string;
 }
+
 const resolvers = {
   Mutation: {
     searchPostcode: async (_parent: unknown, { q, state }: SearchPostcodeArgs): Promise<PostcodeResult> => {
@@ -67,8 +64,7 @@ const resolvers = {
           throw new Error('No localities found in the response.');
         }
       } catch (error) {
-        console.error('Error fetching data from API:', error);
-        throw new Error('Failed to fetch postcode data');
+        throw new Error('Failed to fetch data. Try again with another input values ');
       }
     },
   },
