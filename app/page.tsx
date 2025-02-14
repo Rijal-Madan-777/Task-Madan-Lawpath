@@ -1,9 +1,9 @@
-import FormUi from '@/components/FormUi'
+import GraphqlWrapper from './_wrapper/GraphqlWrapper'
 
 export default function Home() {
   return (
-    <div className="container">
-      <FormUi />
+    <div className="wrapper">
+      <GraphqlWrapper />
     </div>
   )
 }

@@ -1,11 +1,19 @@
-import { stateSuburbList } from '@/Constant/StateSuburbList'
+import { SEARCH_POSTCODE, stateSuburbList } from '@/Constant/constants'
 import { FormValues } from '@/Constant/Types'
+import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 
-const useCustomForm = (initialValues: FormValues) => {
+const useCustomForm = (
+  initialValues: FormValues,
+  addressListRef?: React.RefObject<HTMLDivElement | null>
+) => {
   const [values, setValues] = useState<FormValues>(initialValues)
+  console.log('🚀 ~ values:', values)
   const [errors, setErrors] = useState<Partial<FormValues>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [fetchData, { data, loading, error }] = useMutation(SEARCH_POSTCODE)
+  const parsedData = data?.searchPostcode
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target
@@ -40,11 +48,8 @@ const useCustomForm = (initialValues: FormValues) => {
 
   const validate = () => {
     let newErrors: Partial<FormValues> = {}
-    if (!values.state.trim()) newErrors.state = 'State is required'
-    if (!values.suburb.trim()) {
+    if (!values.suburb.trim() && (values.postcode === '' || isNaN(Number(values.postcode)))) {
       newErrors.suburb = 'Suburb is required'
-    }
-    if (values.postcode === '' || isNaN(Number(values.postcode))) {
       newErrors.postcode = 'Postcode is required'
     }
 
@@ -55,15 +60,23 @@ const useCustomForm = (initialValues: FormValues) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!validate()) return
+    let query = values.postcode !== '' ? values.postcode : values.suburb
     setIsSubmitting(true)
-
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setValues(initialValues)
-    }, 2000)
+    fetchData({ variables: { q: query, state: values.state } })
+      .then(() => {
+        setIsSubmitting(false)
+        setTimeout(() => {
+          if (addressListRef?.current) {
+            addressListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 100)
+      })
+      .catch((err) => {
+        setIsSubmitting(false)
+      })
   }
 
-  return { values, errors, isSubmitting, handleChange, handleSubmit }
+  return { values, errors, isSubmitting, handleChange, parsedData, handleSubmit }
 }
 
 export default useCustomForm
