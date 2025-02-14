@@ -10,6 +10,7 @@ export const SEARCH_POSTCODE = gql`
         state
         latitude
         longitude
+        category
       }
     }
   }

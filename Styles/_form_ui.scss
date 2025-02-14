@@ -45,21 +45,23 @@
     height: 100%;
     width: 100%;
     h3 {
-      color: color(bg-white);
+      color: color(text-primary);
       margin-top: 20px;
       margin-bottom: 20px;
-      @include flexBox(start,center);
+      @include flexBox(center, center);
       gap: 5px;
+      text-align: center;
     }
     h2 {
-      // text-align: center;
-      color: color(bg-white);
+      text-align: center;
+
+      color: color(text-primary);
       font-size: font-size(font-size-medium);
     }
     label {
       display: block;
       font-weight: bold;
-      color: rgb(246, 240, 240);
+      color: color(text-primary);
     }
     p {
       margin-top: 8px;
@@ -72,18 +74,22 @@
       padding: calc(10px + 0.2vw);
       margin-top: 5px;
       border: 1px solid #ccc;
-      background: transparent;
+
       border-radius: 5px;
     }
     input,
     select {
-      color: color(bg-white);
+      color: color(text-primary);
       margin-top: 10px;
+      background: transparent;
       font-size: font-size(font-size-regular);
     }
     input::placeholder {
-      color: color(bg-white);
+      color: color(text-primary);
       font-size: font-size(font-size-regular);
+    }
+    input:not([value='']) {
+      background: yellow;
     }
 
     button {
@@ -95,7 +101,7 @@
         background: color(btn-primary);
         transition: all 0.2s ease-in-out;
       }
-      color: color(bg-white);
+      color: color(text-primary);
       cursor: pointer;
       font-size: font-size(font-size-regular);
     }
@@ -138,3 +144,41 @@
     }
   }
 }
+.address {
+  padding: 2px;
+  background-color: color(bg-background);
+  @include flexBox(start, center, column);
+  padding-bottom: 100px;
+  & h2 {
+    color: rgb(207, 196, 196);
+    width: 90%;
+    font-size: font-size(font-size-medium);
+    margin: 20px 0;
+  }
+  // @include flexBox(center,start);
+  &-list {
+    display: grid;
+    width: 90%;
+    margin: auto;
+
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+
+    &-item {
+      padding: 15px;
+      border-radius: 12px;
+      line-height: 25px;
+      color: color(text-primary);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10);
+    }
+  }
+}
+
+// .main-container {
+//   width: 100%;
+// }

@@ -1,14 +1,18 @@
 import { SEARCH_POSTCODE, stateSuburbList } from '@/Constant/constants'
 import { FormValues } from '@/Constant/Types'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useState } from 'react'
 
-const useCustomForm = (initialValues: FormValues) => {
+const useCustomForm = (
+  initialValues: FormValues,
+  addressListRef?: React.RefObject<HTMLDivElement | null>
+) => {
   const [values, setValues] = useState<FormValues>(initialValues)
   const [errors, setErrors] = useState<Partial<FormValues>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [fetchData, { data, loading, error }] = useMutation(SEARCH_POSTCODE)
+  const parsedData = data?.searchPostcode
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target
@@ -60,21 +64,20 @@ const useCustomForm = (initialValues: FormValues) => {
     if (!validate()) return
     setIsSubmitting(true)
     fetchData({ variables: { q: values.suburb, state: values.state } })
-      .then((result) => {
+      .then(() => {
         setIsSubmitting(false)
+        setTimeout(() => {
+          if (addressListRef?.current) {
+            addressListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 100)
       })
       .catch((err) => {
         setIsSubmitting(false)
-        console.error('Error fetching data:', err)
       })
-
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setValues(initialValues)
-    }, 2000)
   }
 
-  return { values, errors, isSubmitting, handleChange, data, handleSubmit }
+  return { values, errors, isSubmitting, handleChange, parsedData, handleSubmit }
 }
 
 export default useCustomForm

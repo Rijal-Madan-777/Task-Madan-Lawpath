@@ -1,9 +1,10 @@
 // Color variables
 $colors: (
   'bg-white': #ffffff,
+  'text-primary': rgb(207, 196, 196),
   'bg-background': #26263a,
   'btn-primary': #0076bd,
-  'text-secondary': #26263a,
+  'text-secondary': #26263a
 );
 @function color($color-styles) {
   @return map-get($colors, $color-styles);
