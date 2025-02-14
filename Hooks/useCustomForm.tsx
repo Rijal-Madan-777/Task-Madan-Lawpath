@@ -1,4 +1,4 @@
-import { SEARCH_POSTCODE, stateSuburbList } from '../Constant/constants'
+import { postcodeData, SEARCH_POSTCODE, stateSuburbList, suburbData } from '../Constant/constants'
 import { FormValues } from '../Constant/Types'
 import { useMutation } from '@apollo/client'
 import { useEffect, useState } from 'react'
@@ -34,23 +34,50 @@ const useCustomForm = (
         newErrors.state = 'Invalid state selected'
       }
 
-      if (name === 'suburb') {
-        if (
-          stateSuburbList[values.state] &&
-          !Object.keys(stateSuburbList[values.state]).find(
-            (suburb) => suburb.toLowerCase() === value.toLowerCase()
-          )
-        ) {
-          newErrors.suburb = `The suburb ${value} does not exist in the state ${values.state}`
+      if (name === 'state' && values.suburb) {
+        if (suburbData[values.suburb.toLocaleLowerCase()].state === value) {
+          delete newErrors.state
+        } else {
+          newErrors.state = `The state ${value} does not contain in the suburb ${values.suburb}`
+        }
+      } else if (name === 'state' && values.postcode) {
+        if (postcodeData[Number(values.postcode)].state === value) {
+          delete newErrors.state
+        } else {
+          newErrors.state = `The state ${value} does not contain the postcode ${values.postcode}`
         }
       }
 
-      if (
-        name === 'postcode' &&
-        stateSuburbList[values.state] &&
-        stateSuburbList[values.state][values.suburb] !== Number(value)
-      ) {
-        newErrors.postcode = `The postcode ${value} does not match the suburb ${values.suburb}`
+      if (name === 'suburb' && values.state) {
+        if (
+          stateSuburbList[values.state].find((item) => item.suburb === value.toLocaleLowerCase())
+        ) {
+          delete newErrors.suburb
+        } else {
+          newErrors.suburb = `The suburb ${value} does not exist in the state ${values.state}`
+        }
+      } else if (name === 'suburb' && values.postcode) {
+        if (postcodeData[Number(values.postcode)].suburb === value.toLowerCase()) {
+          delete newErrors.suburb
+        } else {
+          newErrors.suburb = `The suburb ${value} does not contain the postcode ${values.postcode}`
+        }
+      }
+      if (name === 'postcode' && values.state) {
+        if (
+          stateSuburbList[values.state] &&
+          stateSuburbList[values.state].find((item) => item.postcode === Number(value))
+        ) {
+          delete newErrors.postcode
+        } else {
+          newErrors.postcode = `The postcode ${value} does not exist in the state ${values.state}`
+        }
+      } else if (name === 'postcode' && values.suburb) {
+        if (suburbData[values.suburb.toLowerCase()].postcode === Number(value)) {
+          delete newErrors.postcode
+        } else {
+          newErrors.postcode = `The postcode ${value} does not exist in the suburb ${values.suburb}`
+        }
       }
     }
     setErrors(newErrors)
