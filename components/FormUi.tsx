@@ -14,6 +14,7 @@ function FormUi() {
     },
     addressListRef
   )
+  console.log('🚀 ~ FormUi ~ errors:', errors)
 
   return (
     <div className="main-container">
@@ -29,7 +30,7 @@ function FormUi() {
             </h3>
             <form onSubmit={handleSubmit}>
               <div className="form-container-input">
-                <label>*State</label>
+                <label>State</label>
                 <select name="state" value={values.state} onChange={handleChange}>
                   <option value="">Select State</option>
                   <option value="NSW">NSW</option>
@@ -42,7 +43,7 @@ function FormUi() {
                 {errors.state && <p>*{errors.state}</p>}
               </div>
               <div className="form-container-input">
-                <label>*Suburb</label>
+                <label>Suburb</label>
                 <input
                   type="text"
                   name="suburb"
@@ -54,7 +55,7 @@ function FormUi() {
               </div>
 
               <div className="form-container-input">
-                <label>*Postcode</label>
+                <label>Postcode</label>
                 <input
                   type="number"
                   name="postcode"
@@ -64,6 +65,16 @@ function FormUi() {
                 />
                 {errors.postcode && <p>*{errors.postcode}</p>}
               </div>
+              {values.postcode &&
+                values.suburb &&
+                values.state &&
+                Object.keys(errors).length === 0 && (
+                  <span className="message">
+                    {' '}
+                    <Icon icon="mdi:playlist-tick" width="24" height="24" /> The postcode, suburb,
+                    and state input are valid.
+                  </span>
+                )}
 
               <button disabled={isSubmitting} type="submit">
                 {isSubmitting ? 'Validating...' : 'Validate Address'}

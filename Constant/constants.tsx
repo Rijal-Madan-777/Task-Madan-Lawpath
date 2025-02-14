@@ -18,15 +18,15 @@ export const SEARCH_POSTCODE = gql`
 export const stateSuburbList: Record<string, Record<string, number>> = {
   VIC: {
     Melbourne: 3000,
-    FerntreeGully: 3156
+    'Ferntree Gully': 3156
   },
   QLD: {
     Brisbane: 4000,
-    NoosaHeads: 4567
+    'Noosa Heads': 4567
   },
   NSW: {
     Broadway: 2007,
-    SurryHills: 2010
+    'Surry Hills': 2010
   },
   WA: {
     Perth: 6000,

@@ -89,7 +89,7 @@
       font-size: font-size(font-size-regular);
     }
     input:not([value='']) {
-      background: yellow;
+      background: transparent;
     }
 
     button {
@@ -144,6 +144,11 @@
     }
   }
 }
+.message {
+  color: rgb(208, 221, 208);
+  margin: 10px ;
+  @include flexBox(start, center);
+}
 .address {
   padding: 2px;
   background-color: color(bg-background);
@@ -160,8 +165,19 @@
     display: grid;
     width: 90%;
     margin: auto;
+    @include responsive($esm) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    @include responsive($md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include responsive($lg) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @include responsive($xxl) {
+      grid-template-columns: repeat(6, 1fr);
+    }
 
-    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
 
     &-item {
@@ -178,7 +194,3 @@
     }
   }
 }
-
-// .main-container {
-//   width: 100%;
-// }

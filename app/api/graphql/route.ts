@@ -42,7 +42,7 @@ const resolvers = {
     searchPostcode: async (_parent: unknown, { q, state }: SearchPostcodeArgs): Promise<PostcodeResult> => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}?q=${q}&state=${state}`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}?q=${q}${state ? `&state=${state}`: ''}`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
