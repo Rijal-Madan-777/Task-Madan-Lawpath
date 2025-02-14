@@ -6,18 +6,37 @@ import React, { useRef } from 'react'
 
 function FormUi() {
   const addressListRef = useRef<HTMLDivElement | null>(null)
-  const { values, errors, isSubmitting, handleChange, serverError, parsedData, handleSubmit } =
-    useCustomForm(
-      {
-        state: '',
-        suburb: '',
-        postcode: ''
-      },
-      addressListRef
-    )
+  const {
+    values,
+    errors,
+    isShowInfo,
+    isSubmitting,
+    handleChange,
+    serverError,
+    parsedData,
+    handleSubmit
+  } = useCustomForm(
+    {
+      state: '',
+      suburb: '',
+      postcode: ''
+    },
+    addressListRef
+  )
 
   return (
     <div className="main-container">
+      {isShowInfo && (
+        <div className="note">
+          <p>
+            <span>
+              <Icon icon="material-symbols-light:info" width="24" height="24" /> Info
+            </span>{' '}
+            Avoid making requests with postcode 3000, as no data will be returned
+          </p>
+        </div>
+      )}
+
       <div className="container">
         <div className="form">
           <div className="form-container">
@@ -75,8 +94,8 @@ function FormUi() {
                 )}
               {serverError && <p className="error-message">{serverError?.message}</p>}
 
-              <button disabled={isSubmitting} type="submit">
-                {isSubmitting ? 'Validating...' : 'Validate Address'}
+              <button disabled={isSubmitting || Object.keys(errors).length !== 0} type="submit">
+                {isSubmitting ? 'Loading...' : 'Validate Address'}
               </button>
             </form>
           </div>

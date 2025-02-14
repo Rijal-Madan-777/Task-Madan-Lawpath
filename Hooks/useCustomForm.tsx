@@ -1,7 +1,7 @@
 import { SEARCH_POSTCODE, stateSuburbList } from '../Constant/constants'
 import { FormValues } from '../Constant/Types'
 import { useMutation } from '@apollo/client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useCustomForm = (
   initialValues: FormValues,
@@ -11,9 +11,16 @@ const useCustomForm = (
   const [errors, setErrors] = useState<Partial<FormValues>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [serverError, setServerError] = useState<any>(null)
+  const [isShowInfo, setIsShowInfo] = useState<boolean>(true)
 
   const [fetchData, { data, loading, error }] = useMutation(SEARCH_POSTCODE)
   const parsedData = data?.searchPostcode
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShowInfo(false)
+    }, 5000)
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target
@@ -81,7 +88,16 @@ const useCustomForm = (
       })
   }
 
-  return { values, errors, isSubmitting, handleChange, serverError, parsedData, handleSubmit }
+  return {
+    values,
+    errors,
+    isSubmitting,
+    isShowInfo,
+    handleChange,
+    serverError,
+    parsedData,
+    handleSubmit
+  }
 }
 
 export default useCustomForm
