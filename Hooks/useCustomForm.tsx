@@ -8,9 +8,9 @@ const useCustomForm = (
   addressListRef?: React.RefObject<HTMLDivElement | null>
 ) => {
   const [values, setValues] = useState<FormValues>(initialValues)
-  console.log('🚀 ~ values:', values)
   const [errors, setErrors] = useState<Partial<FormValues>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [serverError, setServerError] = useState<any>(null)
 
   const [fetchData, { data, loading, error }] = useMutation(SEARCH_POSTCODE)
   const parsedData = data?.searchPostcode
@@ -27,12 +27,15 @@ const useCustomForm = (
         newErrors.state = 'Invalid state selected'
       }
 
-      if (
-        name === 'suburb' &&
-        stateSuburbList[values.state] &&
-        !stateSuburbList[values.state][value]
-      ) {
-        newErrors.suburb = `The suburb ${value} does not exist in the state ${values.state}`
+      if (name === 'suburb') {
+        if (
+          stateSuburbList[values.state] &&
+          !Object.keys(stateSuburbList[values.state]).find(
+            (suburb) => suburb.toLowerCase() === value.toLowerCase()
+          )
+        ) {
+          newErrors.suburb = `The suburb ${value} does not exist in the state ${values.state}`
+        }
       }
 
       if (
@@ -65,6 +68,7 @@ const useCustomForm = (
     fetchData({ variables: { q: query, state: values.state } })
       .then(() => {
         setIsSubmitting(false)
+        setServerError(null)
         setTimeout(() => {
           if (addressListRef?.current) {
             addressListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -72,11 +76,12 @@ const useCustomForm = (
         }, 100)
       })
       .catch((err) => {
+        setServerError(err)
         setIsSubmitting(false)
       })
   }
 
-  return { values, errors, isSubmitting, handleChange, parsedData, handleSubmit }
+  return { values, errors, isSubmitting, handleChange, serverError, parsedData, handleSubmit }
 }
 
 export default useCustomForm

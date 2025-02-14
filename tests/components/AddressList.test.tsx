@@ -38,4 +38,10 @@ describe('AddressList component', () => {
       expect(screen.getByText(`Category : ${item.category}`)).toBeInTheDocument()
     })
   })
+
+  it('renders correctly with an empty data array', () => {
+    render(<AddressList data={[]} />)
+    expect(screen.getByText(/Address List/i)).toBeInTheDocument()
+    expect(screen.queryByText(/State/i)).not.toBeInTheDocument() // No addresses should render
+  })
 })

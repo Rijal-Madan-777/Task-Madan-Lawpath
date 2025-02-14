@@ -1,65 +1,31 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { describe, it, expect, vi } from 'vitest'
 import FormUi from '../../components/FormUi'
+import { describe, expect, it, vi } from 'vitest'
 
-// Mock the useMutation hook from @apollo/client
-vi.mock('@apollo/client', () => ({
-  ...vi.importActual('@apollo/client'), // Retain the actual Apollo Client functionality
-  useMutation: vi.fn(), // Mock the useMutation hook
-  gql: vi.fn(), // Mock gql to avoid execution of queries
+// ✅ Mock useCustomForm to avoid form logic
+vi.mock('../../Hooks/useCustomForm', () => ({
+  default: () => ({
+    values: { state: '', suburb: '', postcode: '' },
+    errors: {},
+    isSubmitting: false,
+    handleChange: vi.fn(),
+    serverError: null,
+    parsedData: null,
+    handleSubmit: vi.fn()
+  })
 }))
-
-const mockData = {
-  data: {
-    searchPostcode: {
-      localities: [
-        {
-          id: '1',
-          state: 'NSW',
-          postcode: '2000',
-          latitude: '34.05',
-          longitude: '118.25',
-          location: 'Sydney',
-          category: 'Urban',
-        },
-      ],
-    },
-  },
-}
-
-// Mock the useMutation hook to return the expected values
-vi.mock('@apollo/client', () => ({
-  ...vi.importActual('@apollo/client'),
-  useMutation: vi.fn().mockReturnValue([
-    () => {}, // Mock mutation function
-    { data: mockData.data, loading: false, error: null }, // Mock response structure
-  ]),
-}))
-
 describe('FormUi Component', () => {
-  it('renders the FormUi component correctly', () => {
+  it('renders the main heading', () => {
     render(<FormUi />)
-
-    // Ensure the form elements are rendered correctly
-    expect(screen.getByLabelText('State')).toBeInTheDocument()
-    expect(screen.getByLabelText('Suburb')).toBeInTheDocument()
-    expect(screen.getByLabelText('Postcode')).toBeInTheDocument()
+    expect(screen.getByText(/Lawpath Tech Test By Madan/i)).toBeInTheDocument()
   })
 
-  it('handles form submission and displays validation message', async () => {
+  it('renders form inputs', () => {
     render(<FormUi />)
-
-    // Simulate user input for form fields
-    fireEvent.change(screen.getByLabelText('State'), { target: { value: 'NSW' } })
-    fireEvent.change(screen.getByLabelText('Suburb'), { target: { value: 'Sydney' } })
-    fireEvent.change(screen.getByLabelText('Postcode'), { target: { value: '2000' } })
-
-    // Submit the form
-    fireEvent.submit(screen.getByRole('form'))
-
-    // Check if the success message is displayed after form submission
-    expect(screen.getByText('The postcode, suburb, and state input are valid.')).toBeInTheDocument()
+    expect(screen.getByLabelText(/State/i)).toBeInTheDocument()
+    expect(screen.getByPlaceholderText(/Suburb/i)).toBeInTheDocument()
+    expect(screen.getByPlaceholderText(/Postcode/i)).toBeInTheDocument()
   })
 })

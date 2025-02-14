@@ -6,31 +6,30 @@ import React, { useRef } from 'react'
 
 function FormUi() {
   const addressListRef = useRef<HTMLDivElement | null>(null)
-  const { values, errors, isSubmitting, handleChange, parsedData, handleSubmit } = useCustomForm(
-    {
-      state: '',
-      suburb: '',
-      postcode: ''
-    },
-    addressListRef
-  )
+  const { values, errors, isSubmitting, handleChange, serverError, parsedData, handleSubmit } =
+    useCustomForm(
+      {
+        state: '',
+        suburb: '',
+        postcode: ''
+      },
+      addressListRef
+    )
 
   return (
     <div className="main-container">
       <div className="container">
         <div className="form">
           <div className="form-container">
-            <h2>
-              <span>Lawpath</span> Tech Test By Madan
-            </h2>
+            <h2>Lawpath Tech Test By Madan</h2>
             <h3>
               <Icon icon="bitcoin-icons:address-book-outline" width="24" height="24" /> Address
               Validation Form
             </h3>
             <form onSubmit={handleSubmit}>
               <div className="form-container-input">
-                <label>State</label>
-                <select name="state" value={values.state} onChange={handleChange}>
+                <label htmlFor="state">State</label>
+                <select id="state" name="state" value={values.state} onChange={handleChange}>
                   <option value="">Select State</option>
                   <option value="NSW">NSW</option>
                   <option value="VIC">VIC</option>
@@ -42,7 +41,7 @@ function FormUi() {
                 {errors.state && <p>*{errors.state}</p>}
               </div>
               <div className="form-container-input">
-                <label>Suburb</label>
+                <label htmlFor="suburb">Suburb</label>
                 <input
                   type="text"
                   name="suburb"
@@ -54,7 +53,7 @@ function FormUi() {
               </div>
 
               <div className="form-container-input">
-                <label>Postcode</label>
+                <label htmlFor="postcode">Postcode</label>
                 <input
                   type="number"
                   name="postcode"
@@ -74,6 +73,7 @@ function FormUi() {
                     and state input are valid.
                   </span>
                 )}
+              {serverError && <p className="error-message">{serverError?.message}</p>}
 
               <button disabled={isSubmitting} type="submit">
                 {isSubmitting ? 'Validating...' : 'Validate Address'}
