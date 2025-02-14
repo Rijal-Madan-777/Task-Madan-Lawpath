@@ -1,8 +1,8 @@
 'use client'
-import useCustomForm from '@/Hooks/useCustomForm'
+import useCustomForm from '../Hooks/useCustomForm'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import AddressList from './AddressList'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 
 function FormUi() {
   const addressListRef = useRef<HTMLDivElement | null>(null)
@@ -14,7 +14,6 @@ function FormUi() {
     },
     addressListRef
   )
-  console.log('🚀 ~ FormUi ~ errors:', errors)
 
   return (
     <div className="main-container">
