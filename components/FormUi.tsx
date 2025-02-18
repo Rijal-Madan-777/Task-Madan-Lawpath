@@ -9,7 +9,6 @@ function FormUi() {
   const {
     values,
     errors,
-    isShowInfo,
     isSubmitting,
     handleChange,
     serverError,
@@ -26,16 +25,6 @@ function FormUi() {
 
   return (
     <div className="main-container">
-      {isShowInfo && (
-        <div className="note">
-          <p>
-            <span>
-              <Icon icon="material-symbols-light:info" width="24" height="24" /> Info
-            </span>{' '}
-            Avoid making requests with postcode 3000, as no data will be returned
-          </p>
-        </div>
-      )}
 
       <div className="container">
         <div className="form">
