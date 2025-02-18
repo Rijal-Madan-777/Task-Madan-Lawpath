@@ -11,16 +11,9 @@ const useCustomForm = (
   const [errors, setErrors] = useState<Partial<FormValues>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [serverError, setServerError] = useState<any>(null)
-  const [isShowInfo, setIsShowInfo] = useState<boolean>(true)
 
   const [fetchData, { data, loading, error }] = useMutation(SEARCH_POSTCODE)
   const parsedData = data?.searchPostcode
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsShowInfo(false)
-    }, 5000)
-  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target
@@ -104,7 +97,6 @@ const useCustomForm = (
     values,
     errors,
     isSubmitting,
-    isShowInfo,
     handleChange,
     serverError,
     parsedData,
