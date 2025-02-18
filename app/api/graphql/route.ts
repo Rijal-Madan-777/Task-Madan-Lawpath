@@ -38,33 +38,26 @@ const resolvers = {
   Mutation: {
     searchPostcode: async (_parent: unknown, { q, state }: SearchPostcodeArgs): Promise<PostcodeResult> => {
       try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}?q=${q}${state ? `&state=${state}`: ''}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}?q=${q}${state ? `&state=${state}` : ''}`;
+        console.log("Fetching URL:", url);
+
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_AUTH_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
         if (response.data.localities && response.data.localities.locality) {
-          const localities: any[] = response.data.localities.locality.map((loc: any) => ({
-            category: loc.category,
-            id: loc.id,
-            latitude: loc.latitude,
-            location: loc.location,
-            longitude: loc.longitude,
-            postcode: loc.postcode,
-            state: loc.state,
-          }));
+          const localityData = response.data.localities.locality;
+          const localities: any[] = Array.isArray(localityData) ? localityData : [localityData];
 
           return { localities };
         } else {
-          throw new Error('No localities found in the response.');
+          throw new Error("No localities found in the response.");
         }
-      } catch (error) {
-        throw new Error('Failed to fetch data. Try again with another input values ');
+      } catch (error: any) {
+        throw new Error("Failed to fetch data. Try again with same input.");
       }
     },
   },
